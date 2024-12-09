@@ -3,48 +3,33 @@
 ## Overview
 SecEnum is a comprehensive system enumeration and security assessment tool designed for security professionals and system administrators. It provides detailed software inventory management with integrated vulnerability assessment capabilities.
 
-## Architecture
-The tool is structured into several key components:
+## Features
+### Package Enumeration
+- Complete package inventory with versions
+- Package integrity verification
+- Repository security validation
+- Package signature verification
+- Dependency tracking
 
-### Core Components (`/secenum/core/`)
-- `enumerator.py`: Main enumeration engine
-- Base interfaces and common utilities
-- Exception handling and logging
+### Service Enumeration
+- System service detection
+- Service status monitoring
+- Security context analysis
+- Resource usage tracking
+- Dependency mapping
+- Security configuration analysis
 
-### Platform-Specific Components (`/secenum/platforms/`)
-#### Linux (`/platforms/linux/`)
-- Package Manager Support
-  - Current focus on Debian/Ubuntu systems (APT)
-  - Modular design for easy extension to other distributions
-- System Service Enumeration
-- Security Policy Verification
-
-## Key Features
-- Package Enumeration
-  - Installed software detection
-  - Version tracking
-  - Package integrity verification
-  - Repository validation
-  - Security signature verification
-- Service Analysis
-  - Running service detection
-  - Security configuration assessment
-  - Dependency mapping
-- Security Features
-  - Package hash verification
-  - Digital signature validation
-  - CVE database integration
-  - Security policy verification
-  - Audit logging
-  - Encrypted storage
+### System Information
+- Detailed system information gathering
+- Security configuration assessment
+- Resource utilization monitoring
+- User enumeration
+- Security policy verification
 
 ## Current Support
-- Operating Systems:
-  - Linux (Debian/Ubuntu)
-  - More distributions planned
-- Package Managers:
-  - APT (Advanced Package Tool)
-  - More package managers planned
+- Debian/Ubuntu Linux systems
+- APT package management
+- Systemd services
 
 ## Installation
 ```bash
@@ -61,49 +46,64 @@ pip install -r requirements.txt
 ```
 
 ## Usage
+Basic enumeration:
+```python
+from secenum.core.enumerator import SystemEnumerator
+
+# Create enumerator instance
+enumerator = SystemEnumerator()
+
+# Perform complete enumeration
+results = enumerator.enumerate_all()
+
+# Enumerate specific components
+packages = enumerator.enumerate_packages()
+services = enumerator.enumerate_services()
+
+# Perform security analysis
+security = enumerator.analyze_security()
+```
+
+Command-line usage:
 ```bash
-# Basic software enumeration
+# Complete system enumeration
 python -m secenum scan
 
-# Full security assessment
-python -m secenum assess --full
+# Security analysis only
+python -m secenum analyze
 
 # Export results to JSON
 python -m secenum scan --output report.json
 ```
 
+## Security Features
+- Package integrity verification
+- Service security analysis
+- Repository validation
+- Security context checking
+- Configuration assessment
+- Resource monitoring
+
 ## Development
-### Project Structure
+The project follows a modular architecture:
 ```
 secenum/
 ├── core/
-│   ├── __init__.py          # Core exceptions and utilities
-│   └── enumerator.py        # Main enumeration interface
+│   ├── __init__.py
+│   └── enumerator.py      # Main coordination
 ├── platforms/
 │   └── linux/
 │       ├── package_managers/
-│       │   ├── __init__.py
-│       │   ├── base.py      # Abstract package manager interface
-│       │   └── apt.py       # Debian/Ubuntu implementation
-│       └── services.py      # Service enumeration (planned)
-├── interfaces/
-│   ├── __init__.py
-│   └── cli.py              # Command-line interface
-└── utils/                  # Utility functions (planned)
+│       │   ├── base.py    # Package manager interface
+│       │   └── apt.py     # APT implementation
+│       ├── services.py    # Service enumeration
+│       └── system_info.py # System information
+└── interfaces/
+    └── cli.py            # Command-line interface
 ```
 
-### Contributing
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/new-feature`
-3. Commit your changes: `git commit -am 'Add new feature'`
-4. Push to the branch: `git push origin feature/new-feature`
-5. Submit a pull request
-
-## Security Considerations
-- All package verifications use cryptographic validation
-- Repository sources are checked for secure connections
-- Service configurations are validated against security best practices
-- Root privileges are required for complete enumeration
+## Contributing
+See CONTRIBUTING.md for guidelines on contributing to the project.
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
